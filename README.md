@@ -13,7 +13,7 @@ setInterval을 사용하여 300ms 간격으로 익명 함수를 반복 실행하
 
 count 값이 4를 초과하는 조건이 만족되면 clearInterval 함수로 timer로 식별되는 인터벌을 중지함
 
-'''JavaScript
+'''
 // 예제 4-1 콜백 함수 내부에서의 this setInterval
 var count = 0;
 var timer = setInterval(function () {
