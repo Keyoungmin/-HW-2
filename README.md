@@ -25,4 +25,32 @@ var timer = setInterval(function () {
 ```
 
 
+#### Ex 4-2
+- 콜백 함수를 setInterval과 같은 다른 함수에 전달하여 실행 제어권을 넘기는 과정을 설명함
+
+- setInterval은 인자로 전달받은 cbFunc 함수를 300ms마다 주기적으로 실행함
+
+- cbFunc 함수 내부에서는 count 값을 출력 및 증가시키고, count가 4를 초과하면 clearInterval을 호출하여 timer로 지정된 인터벌을 중단시킴
+
+- 이를 통해 명명된 함수(cbFunc)를 콜백으로 사용하는 예를 보여줌
+
+```
+// 예제 4-2 콜백 함수 내부에서의 this setInterval
+var count = 0;
+var cbFunc = function () {
+  console.log(count);
+  if (++count > 4) clearInterval(timer);
+};
+var timer = setInterval(cbFunc, 300);
+```
+
+```
+// 실행 결과
+0
+1
+2
+3
+4
+```
+
 
