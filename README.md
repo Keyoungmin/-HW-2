@@ -893,7 +893,39 @@ document.body.appendChild($ul);
 
 ```
 //실행 결과
-5-7과 동일
+Ex 5-7 과 동일
+```
+
+### Ex 5-9
+
+- 콜백 함수에서 외부 변수를 참조하기 위해 고차 함수(Higher-Order Function)를 활용하여 클로저를 적극적으로 사용하는 방법을 보여주는 예제
+- alertFruitBuilder는 fruit 문자열을 인자로 받아, 이 fruit 값을 기억하고 있는 새로운 함수(클로저)를 반환함
+- fruits 배열의 각 요소에 대해 li 요소를 생성하고, 각 li 요소의 클릭 이벤트 리스너로 alertFruitBuilder(fruit)의 반환 값을 등록함
+
+
+```
+// 예제 5-9 콜백 함수와 클로저(4)
+var fruits = ['apple', 'banana', 'peach'];
+var $ul = document.createElement('ul');
+
+var alertFruitBuilder = function (fruit) {
+    return function () {
+      alert('your choice is - ' + fruit);
+    };
+  };
+
+  fruits.forEach(function (fruit) {
+    var $li = document.createElement('li');
+    $li.innerText = fruit;
+    $li.addEventListener('click', alertFruitBuilder(fruit));
+    $ul.appendChild($li);
+  });
+  document.body.appendChild($ul);
+```
+
+```
+//실행 결과
+Ex 5-7 과 동일
 ```
 
 
