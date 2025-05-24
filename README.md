@@ -347,3 +347,51 @@ setTimeout(function (name) {
 에스프레소, 아메리카노, 카페라떼, 카페모카
 ```
 
+#### Ex 4-13
+- 예제 4-12에서 나타난 콜백 지옥 문제를 해결하기 위해, 중첩된 익명 콜백 함수들을 각각의 독립적인 기명 함수로 분리하여 코드의 가독성을 향상시키는 방법을 제시함
+
+- 커피를 추가하고 다음 커피 추가 함수를 호출하는 로직을 addEspresso, addAmericano, addMocha, addLatte라는 네 개의 개별 함수로 정의함
+
+- 각 함수는 자신의 로직을 수행한 후, 다음 순서의 함수를 setTimeout을 이용해 0.5초 뒤에 호출함
+
+- 이처럼 함수를 분리함으로써 코드의 들여쓰기 수준이 낮아지고 각 함수의 역할이 명확해져 전체적인 코드 구조가 더 평탄하고 이해하기 쉬워짐
+
+
+```
+// 예제 4-13 콜백 지옥 해결 - 기명함수로 변환
+var coffeeList = '';
+
+var addEspresso = function (name) {
+  coffeeList = name;
+  console.log(coffeeList);
+  setTimeout(addAmericano, 500, '아메리카노');
+};
+
+var addAmericano = function (name) {
+  coffeeList += ', ' + name;
+  console.log(coffeeList);
+  setTimeout(addMocha, 500, '카페모카');
+};
+
+var addMocha = function (name) {
+  coffeeList += ', ' + name;
+  console.log(coffeeList);
+  setTimeout(addLatte, 500, '카페라떼');
+};
+
+var addLatte = function (name) {
+  coffeeList += ', ' + name;
+  console.log(coffeeList);
+};
+
+setTimeout(addEspresso, 500, '에스프레소');
+```
+
+```
+//실행 결과
+에스프레소
+에스프레소, 아메리카노
+에스프레소, 아메리카노, 카페모카
+에스프레소, 아메리카노, 카페모카, 카페라떼
+```
+
