@@ -839,3 +839,32 @@ document.body.appendChild($ul);
 ![image](https://github.com/user-attachments/assets/5c2e83ab-5a4b-425c-9b39-76280e81282c)
 
 
+### Ex 5-7
+
+- 즉시실행함수를 사용하여 콜백 함수 내부에서 반복 변수의 특정 시점 값을 유지하는 방법을 보여줌
+  
+- 각각의 이벤트 리스너가 자신만의 독립된 스코프를 가지도록 하여 클로저 문제를 해결
+
+```
+// 예제 5-7 콜백 함수와 클로저 (2)
+var fruits = ['apple', 'banana', 'peach'];
+var $ul = document.createElement('ul');
+
+fruits.forEach(function (fruit) {
+    var $li = document.createElement('li');
+    $li.innerText = fruit;
+    $li.addEventListener('click', (function (f) { // (B) 즉시실행함수
+        return function () { // (C)
+            alert('your choice is ' + f);
+        };
+    })(fruit)); // (A) fruit 값을 인자로 전달
+    $ul.appendChild($li);
+});
+document.body.appendChild($ul);
+```
+
+
+//실행 결과
+![image](https://github.com/user-attachments/assets/4be18f1e-c406-4dfa-94c0-401f03f41c4a)
+
+
