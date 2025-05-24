@@ -591,11 +591,9 @@ var addCoffee = function (name) {
 ### Ex 5-1
 - 내부 함수가 외부 함수의 스코프에 있는 변수에 접근하는 일반적인 동작을 설명함
 
-```
-예제 5-1 외부 함수의 변수를 참조하는 내부 함수(1)
-```
 
 ```
+//예제 5-1 외부 함수의 변수를 참조하는 내부 함수(1)
 var outer = function () {
     var a = 1;
     var inner = function () {
@@ -634,4 +632,28 @@ console.log(outer2); // 2
 2
 ```
 
+### Ex 5-3
+- 외부 함수의 실행 컨텍스트가 종료된 후에도 호출 가능한 클로저를 만드는 방법을 보여줌
+
+- 외부 함수가 내부 함수 자체를 반환하여, 반환된 함수가 원래의 외부 스코프에 계속 접근할 수 있음을 설명함
+
+```
+// 예제 5-3 외부 함수의 변수를 참조하는 내부 함수(3)
+var outer = function () {
+    var a = 1;
+    var inner = function () {
+        return ++a;
+    };
+    return inner;
+};
+var outer2 = outer();
+console.log(outer2()); // 2
+console.log(outer2()); // 3
+```
+
+```
+//실행 결과
+2
+3
+```
 
