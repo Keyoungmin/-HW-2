@@ -4,7 +4,7 @@ var $ul = document.createElement('ul');
 
 var alertFruitBuilder = function (fruit) {
     return function () {
-      alert('your choice is - ' + fruit);
+      alert('your choice is ' + fruit);
     };
   };
 
