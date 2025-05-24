@@ -529,3 +529,57 @@ var addCoffee = function (prevName, name) {
 에스프레소, 아메리카노, 카페모카
 에스프레소, 아메리카노, 카페모카, 카페라떼
 ```
+
+#### Ex 4-17
+- async/await 구문을 Promise와 함께 사용하여 비동기적인 커피 추가 작업을 동기적인 코드 흐름처럼 작성하는 방법
+
+- addCoffee(name) 함수는 0.5초 후 전달받은 name으로 resolve되는 Promise를 반환함
+
+- async 함수인 coffeeMaker는 비동기 작업의 전체 흐름을 관리하며, 내부 async 함수인 _addCoffee(name)를 순차적으로 호출함
+
+_addCoffee 함수는 await addCoffee(name)을 통해 addCoffee Promise가 완료될 때까지 실행을 기다림. 완료 후, coffeeList 문자열에 새로운 커피 이름을 추가하고, 업데이트된 coffeeList를 즉시 콘솔에 출력함
+
+- coffeeMaker 함수는 각 await _addCoffee(...) 호출이 완료된 후, coffeeList의 현재 상태를 추가적으로 콘솔에 한 번 더 출력함. 이로 인해 각 커피가 추가될 때마다 최종 리스트가 두 번씩 (한 번은 _addCoffee 내부에서, 한 번은 coffeeMaker 내부에서) 출력되는 패턴을 보임
+
+- await를 사용함으로써 비동기 작업들이 마치 동기적인 코드처럼 순서대로 실행되는 것처럼 보여 가독성을 크게 향상시킴
+
+
+```
+// 예제 4-17 비동기 작업의 동기적 표현(4) - Promise + Async/await
+var addCoffee = function (name) {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        resolve(name);
+      }, 500);
+    });
+  };
+  var coffeeMaker = async function () {
+    var coffeeList = '';
+    var _addCoffee = async function (name) {
+      coffeeList += (coffeeList ? ',' : '') + await addCoffee(name);
+      console.log(coffeeList); // _addCoffee 내부에서 출력
+    };
+    await _addCoffee('에스프레소');
+    console.log(coffeeList); // coffeeMaker 내부에서 출력
+    await _addCoffee('아메리카노');
+    console.log(coffeeList); // coffeeMaker 내부에서 출력
+    await _addCoffee('카페모카');
+    console.log(coffeeList); // coffeeMaker 내부에서 출력
+    await _addCoffee('카페라떼');
+    console.log(coffeeList); // coffeeMaker 내부에서 출력
+  };
+  coffeeMaker();
+```
+
+```
+//실행 결과
+에스프레소
+에스프레소
+에스프레소,아메리카노
+에스프레소,아메리카노
+에스프레소,아메리카노,카페모카
+에스프레소,아메리카노,카페모카
+에스프레소,아메리카노,카페모카,카페라떼
+에스프레소,아메리카노,카페모카,카페라떼
+```
+
