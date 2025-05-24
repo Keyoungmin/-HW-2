@@ -190,5 +190,37 @@ var obj = {
 } 6 2
 ```
 
+#### Ex 4-8
+- 클로저를 이용하여 콜백으로 사용될 함수 내부에서 외부 함수의 this 값을 참조하는 전통적인 방법
+
+- obj1.func가 호출될 때, 그 안의 this를 self라는 변수에 할당함
+
+- obj1.func는 내부 함수를 반환하는데, 이 내부 함수는 자신이 선언될 때의 환경을 기억하므로 self 변수에 접근할 수 있음
+
+- 반환된 내부 함수가 setTimeout의 콜백으로 실행될 때, self를 통해 원래의 obj1 객체의 name 속성에 접근하여 'obj1'을 출력함
+
+```
+// 예제 4-8 콜백 함수 내부의 this를 다른 값으로 바인딩하는 방법(1) - 전통적인 방식
+var obj1 = {
+    name: 'obj1',
+    func: function () {
+      var self = this; // self 변수에 this(obj1)를 할당
+      return function () {
+        console.log(self.name); // 내부 함수에서 self를 통해 obj1.name에 접근
+      };
+    }
+  };
+  var callback = obj1.func();
+  setTimeout(callback, 1000);
+```
+
+```
+//실행 결과
+obj1
+```
+
+
+
+
 
 
