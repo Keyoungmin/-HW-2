@@ -1037,4 +1037,28 @@ var createCar = function () {
 ```
 
 
+### Ex 5-13
+
+- bind 메서드를 사용하여 함수의 일부 인자를 미리 고정시켜 새로운 함수(부분 적용 함수)를 만드는 방법
+- 첫 번째 인자로 this를, 이후 인자들을 순차적으로 고정하여 사용
+
+```
+// 예제 5-13 bind 메서드를 활용한 부분 적용 함수
+var add = function () {
+    var result = 0;
+    for (var i = 0; i < arguments.length; i++) {
+        result += arguments[i];
+    }
+    return result;
+};
+var addPartial = add.bind(null, 1, 2, 3, 4, 5); // this는 null, 1,2,3,4,5를 미리 적용
+console.log(addPartial(6, 7, 8, 9, 10)); // 55
+```
+
+```
+//실행 결과
+55
+```
+
+
 
