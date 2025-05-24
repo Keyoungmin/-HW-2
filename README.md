@@ -1018,5 +1018,23 @@ undefined
 3km 이동 (총 16km, 남은 연료: 13.8)
 ```
 
+### Ex 5-12
+
+- 클로저를 사용하여 public 멤버를 만들려고 할 때 this 바인딩으로 인해 의도대로 동작하지 않는 잘못된 접근 방식을 보여줌
+- 메서드 내부의 this가 클로저의 외부 변수가 아닌 메서드가 속한 publicMembers를 가리키게 되어 클로저가 형성되지 않아 fuel, power 등에 접근하지 못함
+
+```
+// 예제 5-12 클로저로 변수를 보호한 자동차 객체 (2)
+var createCar = function () {
+...
+    var publicMembers = {
+...
+    };
+    Object.freeze(publicMembers);
+
+    return publicMembers;
+};
+```
+
 
 
