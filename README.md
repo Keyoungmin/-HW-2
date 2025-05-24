@@ -3,7 +3,7 @@
 
 ## Chapter 4
 ---
-#### Ex 4-1
+### Ex 4-1
 - setInterval을 이용한 함수의 주기적 실행과 clearInterval을 이용한 중단 방법을 시연함
 
 - count 변수를 0으로 초기화함
@@ -25,7 +25,7 @@ var timer = setInterval(function () {
 ```
 
 
-#### Ex 4-2
+### Ex 4-2
 - 콜백 함수를 setInterval과 같은 다른 함수에 전달하여 실행 제어권을 넘기는 과정을 설명함
 
 - setInterval은 인자로 전달받은 cbFunc 함수를 300ms마다 주기적으로 실행함
@@ -53,7 +53,7 @@ var timer = setInterval(cbFunc, 300);
 4
 ```
 
-#### Ex 4-3
+### Ex 4-3
 
 - map 메서드는 배열 [10, 20, 30]의 각 요소에 대해 콜백 함수를 한 번씩 호출함
 
@@ -80,7 +80,7 @@ var newArr = [10, 20, 30].map(function (currentValue, index) {
 [ 15, 25, 35 ]
 ```
 
-#### Ex 4-4
+### Ex 4-4
 - Array.prototype.map이 콜백 함수를 호출할 때, 콜백 함수에 정의된 매개변수 이름(idx, currVal)과 관계없이 항상 정해진 순서(첫 번째 인자: 현재 요소 값, 두 번째 인자: 인덱스)로 값을 전달하는 방식을 설명함
 
 - 이 예제에서 map 메서드의 콜백 함수는 idx와 currVal이라는 두 개의 매개변수를 가짐
@@ -108,7 +108,7 @@ var newArr2 = [10, 20, 30].map(function (idx, currVal) {
 [ 5, 6, 7 ]
 ```
 
-#### Ex 4-5
+### Ex 4-5
 - 첫 번째 인자로 전달받은 callback과 두 번째 인자로 전달받은 thisArg를 사용함 
 
 - 콜백 함수를 호출할 때는 세 가지 인자, 즉 배열의 현재 요소(this[i]), 현재 인덱스(i), 그리고 배열 자기 자신(this)을 전달함
@@ -127,7 +127,7 @@ Array.prototype.map = function (callback, thisArg) {
   };
 ```
 
-#### Ex 4-6
+### Ex 4-6
 - 다양한 비동기 및 콜백 상황(setTimeout, 배열의 forEach, addEventListener)에서 콜백 함수 내부의 this가 각각 무엇을 참조하는지 보여줌
 
 - setTimeout에 전달된 콜백 함수: 내부에서 this를 별도로 지정하지 않으므로, 콜백 함수 내의 this는 전역 객체(Window)를 참조함
@@ -155,7 +155,7 @@ document.body.querySelector('#a')
 
 
 
-#### Ex 4-7
+### Ex 4-7
 
 - 객체의 메서드도 콜백 함수로 전달될 수 있으며, 이 경우 함수 내부의 this는 함수가 어떻게 호출되느냐에 따라 결정됨을 설명함
 
@@ -190,7 +190,7 @@ var obj = {
 } 6 2
 ```
 
-#### Ex 4-8
+### Ex 4-8
 - 클로저를 이용하여 콜백으로 사용될 함수 내부에서 외부 함수의 this 값을 참조하는 전통적인 방법
 
 - obj1.func가 호출될 때, 그 안의 this를 self라는 변수에 할당함
@@ -220,7 +220,7 @@ obj1
 ```
 
 
-#### Ex 4-9
+### Ex 4-9
 
 - 콜백 함수 내부에서 this를 사용하는 대신, 참조하고자 하는 객체의 이름을 직접 사용하여 해당 객체의 속성에 접근하는 방법을 보여줌
 
@@ -246,7 +246,7 @@ setTimeout(obj1.func, 1000);
 obj1
 ```
 
-#### Ex 4-10
+### Ex 4-10
 - Ex 4-8을 다른 객체(obj2, obj3)의 컨텍스트에서 재활용하려 할 때의 동작을 보여줌
 
 - obj1.func를 obj2의 func 메서드로 할당하고 obj2.func()를 호출하여 콜백 함수을 callback2에 저장함
@@ -277,7 +277,7 @@ obj3
 ```
 
 
-#### Ex 4-11
+### Ex 4-11
 - Function.prototype.bind 메서드를 사용하여 콜백 함수 내부의 this 값을 원하는 객체로 명시적으로 바인딩하는 방법
 
 - obj1.func는 this.name을 출력하는 함수임
@@ -306,7 +306,7 @@ obj1
 obj2
 ```
 
-#### Ex 4-12
+### Ex 4-12
 - 비동기 작업을 순차적으로 처리하기 위해 콜백 함수를 반복적으로 중첩 사용하여 발생하는 "콜백 지옥"의 전형적인 예시를 보여줌
   
 - setTimeout 함수가 연쇄적으로 호출되며, 각 콜백 함수는 커피 이름을 coffeeList 문자열에 누적하고 현재까지의 목록을 콘솔에 출력함
@@ -347,7 +347,7 @@ setTimeout(function (name) {
 에스프레소, 아메리카노, 카페라떼, 카페모카
 ```
 
-#### Ex 4-13
+### Ex 4-13
 - 예제 4-12에서 나타난 콜백 지옥 문제를 해결하기 위해, 중첩된 익명 콜백 함수들을 각각의 독립적인 기명 함수로 분리하여 코드의 가독성을 향상시키는 방법을 제시함
 
 - 커피를 추가하고 다음 커피 추가 함수를 호출하는 로직을 addEspresso, addAmericano, addMocha, addLatte라는 네 개의 개별 함수로 정의함
@@ -395,7 +395,7 @@ setTimeout(addEspresso, 500, '에스프레소');
 에스프레소, 아메리카노, 카페모카, 카페라떼
 ```
 
-#### Ex 4-14
+### Ex 4-14
 - Promise를 사용하여 예제 4-12와 같은 콜백 지옥 형태의 비동기 코드를 보다 동기적인 흐름으로 표현하는 방법
 
 - 각 커피를 추가하는 비동기 작업(setTimeout으로 0.5초 지연)을 별도의 Promise 객체로 감쌈
@@ -451,7 +451,7 @@ new Promise(function (resolve) {
 ```
 
 
-#### Ex 4-15
+### Ex 4-15
 - 예제 4-14에서 Promise 체인을 구성할 때 반복적으로 사용된 로직을 addCoffee라는 고차 함수로 분리하여 코드를 더 간결하게 만드는 방법
 
 - addCoffee(name) 함수는 prevName을 인자로 받아 새로운 Promise를 반환하는 함수를 리턴함
@@ -489,7 +489,7 @@ var addCoffee = function (name) {
 에스프레소, 아메리카노, 카페모카, 카페라떼
 ```
 
-#### Ex 4-16
+### Ex 4-16
 - Generator를 사용하여 비동기적인 커피 추가 작업을 동기적인 코드처럼 보이도록 작성하는 방법
 
 - coffeeGenerator는 *가 붙은 제너레이터 함수로, yield 키워드를 사용하여 각 addCoffee 비동기 작업 지점에서 함수의 실행을 일시 중단함
@@ -530,7 +530,7 @@ var addCoffee = function (prevName, name) {
 에스프레소, 아메리카노, 카페모카, 카페라떼
 ```
 
-#### Ex 4-17
+### Ex 4-17
 - async/await 구문을 Promise와 함께 사용하여 비동기적인 커피 추가 작업을 동기적인 코드 흐름처럼 작성하는 방법
 
 - addCoffee(name) 함수는 0.5초 후 전달받은 name으로 resolve되는 Promise를 반환함
