@@ -108,8 +108,24 @@ var newArr2 = [10, 20, 30].map(function (idx, currVal) {
 [ 5, 6, 7 ]
 ```
 
+#### Ex 4-5
+- 첫 번째 인자로 전달받은 callback과 두 번째 인자로 전달받은 thisArg를 사용함 
 
+- 콜백 함수를 호출할 때는 세 가지 인자, 즉 배열의 현재 요소(this[i]), 현재 인덱스(i), 그리고 배열 자기 자신(this)을 전달함
 
+- 각 콜백 호출의 반환 값을 모아 새로운 배열(mappedArr)을 만들어 반환함
+
+```
+// 예제 4-5 콜백 함수 예제 (2-3) - Array.prototype.map - 구현
+Array.prototype.map = function (callback, thisArg) {
+    var mappedArr = [];
+    for (var i = 0; i < this.length; i++) {
+      var mappedValue = callback.call(thisArg || window, this[i], i, this);
+      mappedArr.push(mappedValue);
+    }
+    return mappedArr;
+  };
+```
 
 
 
