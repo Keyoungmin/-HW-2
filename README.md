@@ -810,3 +810,32 @@ var outer = function () {
 
 //실행 결과
 ![image](https://github.com/user-attachments/assets/32a44e8f-4d58-4c25-aa90-ec2f461ef9b7)
+
+
+### Ex 5-6
+
+- 콜백 함수가 외부 스코프 변수를 참조할 때, 반복문이 종료된 후 실행되면 변수의 최종 값만 참조하는 문제를 보여줌
+  
+- forEach의 콜백 함수 내 이벤트 리스너가 fruit 변수를 참조할 때, 의도와 다르게 동작할 수 있는 가능성을 제시함
+
+```
+// 예제 5-6 콜백 함수와 클로저 (1)
+var fruits = ['apple', 'banana', 'peach'];
+var $ul = document.createElement('ul');
+
+fruits.forEach(function (fruit) { // (A)
+    var $li = document.createElement('li');
+    $li.innerText = fruit;
+    $li.addEventListener('click', function () { // (B)
+        alert('your choice is ' + fruit);
+    });
+    $ul.appendChild($li);
+});
+document.body.appendChild($ul);
+```
+
+
+//실행 결과
+![image](https://github.com/user-attachments/assets/5c2e83ab-5a4b-425c-9b39-76280e81282c)
+
+
