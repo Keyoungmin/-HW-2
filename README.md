@@ -277,3 +277,33 @@ obj3
 ```
 
 
+#### Ex 4-11
+- Function.prototype.bind 메서드를 사용하여 콜백 함수 내부의 this 값을 원하는 객체로 명시적으로 바인딩하는 방법
+
+- obj1.func는 this.name을 출력하는 함수임
+
+- setTimeout(obj1.func.bind(obj1), 1000): obj1.func의 this를 obj1으로 바인딩한 새로운 함수를 생성하여 setTimeout에 전달함. 1초 후, 콜백이 실행되면 this는 obj1을 참조하여 'obj1'을 출력함
+- 
+- setTimeout(obj1.func.bind(obj2), 1500): obj1.func의 this를 obj2로 바인딩한 새로운 함수를 생성하여 setTimeout에 전달함. 1.5초 후, 콜백이 실행되면 this는 obj2를 참조하여 'obj2'를 출력함
+
+```
+// 예제 4-11 콜백 함수 내부의 this를 다른 값으로 바인딩하는 방법(2) - bind 메서드 활용
+var obj1 = {
+    name: "obj1",
+    func: function () {
+      console.log(this.name);
+    }
+  };
+  setTimeout(obj1.func.bind(obj1), 1000);
+  
+  var obj2 = { name: "obj2" };
+  setTimeout(obj1.func.bind(obj2), 1500);
+```
+
+```
+//실행 결과
+obj1
+obj2
+```
+
+
