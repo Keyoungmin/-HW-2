@@ -395,3 +395,59 @@ setTimeout(addEspresso, 500, '에스프레소');
 에스프레소, 아메리카노, 카페모카, 카페라떼
 ```
 
+#### Ex 4-14
+- Promise를 사용하여 예제 4-12와 같은 콜백 지옥 형태의 비동기 코드를 보다 동기적인 흐름으로 표현하는 방법
+
+- 각 커피를 추가하는 비동기 작업(setTimeout으로 0.5초 지연)을 별도의 Promise 객체로 감쌈
+
+- Promise 내부의 비동기 작업이 완료되면 resolve(name)을 호출하여 다음 처리 단계로 결과(name)를 전달함
+
+- .then() 메서드를 체인 형태로 연결하여, 이전 Promise가 성공적으로 resolve되면 다음 Promise 로직이 순차적으로 실행됨 
+
+- 이를 통해 깊은 들여쓰기 없이 비동기 작업들의 순서를 명확하게 표현하여 코드의 가독성과 관리 용이성을 높임
+
+
+```
+// 예제 4-14 비동기 작업의 동기적 표현(1) - Promise(1)
+new Promise(function (resolve) {
+    setTimeout(function () {
+      var name = '에스프레소';
+      console.log(name);
+      resolve(name);
+    }, 500);
+  }).then(function (prevName) {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        var name = prevName + ', 아메리카노';
+        console.log(name);
+        resolve(name);
+      }, 500);
+    });
+  }).then(function (prevName) {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        var name = prevName + ', 카페모카';
+        console.log(name);
+        resolve(name);
+      }, 500);
+    });
+  }).then(function (prevName) {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        var name = prevName + ', 카페라떼';
+        console.log(name);
+        resolve(name);
+      }, 500);
+    });
+  });
+```
+
+```
+//실행 결과
+에스프레소
+에스프레소, 아메리카노
+에스프레소, 아메리카노, 카페모카
+에스프레소, 아메리카노, 카페모카, 카페라떼
+```
+
+
