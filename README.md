@@ -127,6 +127,35 @@ Array.prototype.map = function (callback, thisArg) {
   };
 ```
 
+#### Ex 4-6
+- 다양한 비동기 및 콜백 상황(setTimeout, 배열의 forEach, addEventListener)에서 콜백 함수 내부의 this가 각각 무엇을 참조하는지 보여줌
+
+- setTimeout에 전달된 콜백 함수: 내부에서 this를 별도로 지정하지 않으므로, 콜백 함수 내의 this는 전역 객체(Window)를 참조함
+
+- 배열의 forEach 메서드에 전달된 콜백 함수: forEach 호출 시 this로 사용될 객체(thisArg)를 전달하지 않으면, 콜백 함수 내의 this는 (비엄격 모드에서) 전역 객체(Window)를 참조함
+
+
+```
+// 예제 4-6 콜백 함수 내부에서의 this
+setTimeout(function () { console.log(this); }, 300);
+
+[1, 2, 3, 4, 5].forEach(function (x) {
+  console.log(this);
+});
+
+document.body.innerHTML += '<button id="a">클릭</button>';
+document.body.querySelector('#a')
+  .addEventListener('click', function (e) {
+    console.log(this, e);
+  });
+```
+
+//코드 실행 결과
+![image](https://github.com/user-attachments/assets/c22c94d1-316a-45d9-af40-f740325eafc7)
+
+
+
+
 
 
 
