@@ -717,7 +717,7 @@ console.log(outer2()); // 3
 })();
 ```
 
-```
+
 //실행 결과
 ![image](https://github.com/user-attachments/assets/1b792c35-1e13-4d52-bc85-878b504a79e8)
-```
+
