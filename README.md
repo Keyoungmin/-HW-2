@@ -1106,4 +1106,61 @@ console.log(dog.greet(' 입니다!'));
 왈왈, 강아지 입니다!
 ```
 
+### Ex 5-15
+
+- window 객체에 _ 라는 특별한 값(EMPTY_SPACE)을 정의하여, 나중에 채워질 인자의 '플레이스홀더'로 사용함
+- partial2 함수는 원본 함수와 미리 채울 인자들을 받아 새로운 함수를 반환함
+- 반환된 함수가 호출될 때, 플레이스홀더 _ 위치에는 실행 시 전달된 인자들이 순서대로 채워지고, 이후 원본 함수가 실행됨
+
+```
+// 예제 5-15 부분 적용 함수 구현(2)
+
+Object.defineProperty(global, '_', {
+    value: 'EMPTY_SPACE',
+    writable: false,
+    configurable: false,
+    enumerable: false
+  });
+  
+  var partial2 = function () {
+    var originalPartialArgs = arguments;
+    var func = originalPartialArgs[0];
+    if (typeof func !== 'function') {
+      throw new Error('첫 번째 인자가 함수가 아닙니다.');
+    }
+    return function () {
+      var partialArgs = Array.prototype.slice.call(originalPartialArgs, 1);
+      var restArgs = Array.prototype.slice.call(arguments);
+      for (var i = 0; i < partialArgs.length; i++) {
+        if (partialArgs[i] === _) { 
+          partialArgs[i] = restArgs.shift();
+        }
+      }
+      return func.apply(this, partialArgs.concat(restArgs));
+    };
+  };
+  
+  var add = function () {
+    var result = 0;
+    for (var i = 0; i < arguments.length; i++) {
+      result += arguments[i];
+    }
+    return result;
+  };
+  var addPartial = partial2(add, 1, _, 2, _, 4, 5, _, _, 8, 9);
+  console.log(addPartial(3, 6, 7, 10));                            // 55
+  
+  var dog = {
+    name: '강아지',
+    greet: partial2(function(prefix, suffix) {
+      return prefix + this.name + suffix;
+    }, '왈왈, ', ' 배고파요!')
+  };
+  dog.greet();                                              // 왈왈, 강아지 배고파요!
+```
+
+```
+//실행 결과
+55
+```
 
