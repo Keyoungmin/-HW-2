@@ -57,11 +57,11 @@ var timer = setInterval(cbFunc, 300);
 
 - map 메서드는 배열 [10, 20, 30]의 각 요소에 대해 콜백 함수를 한 번씩 호출함
 
--호출 시, 콜백 함수는 첫 번째 인자로 현재 처리 중인 요소(currentValue), 두 번째 인자로 해당 요소의 인덱스(index)를 전달받음
+- 호출 시, 콜백 함수는 첫 번째 인자로 현재 처리 중인 요소(currentValue), 두 번째 인자로 해당 요소의 인덱스(index)를 전달받음
 
--콜백 함수는 currentValue에 5를 더한 값을 반환하며, map 메서드는 이러한 반환 값들로 구성된 새로운 배열 [15, 25, 35]를 newArr에 할당함
+- 콜백 함수는 currentValue에 5를 더한 값을 반환하며, map 메서드는 이러한 반환 값들로 구성된 새로운 배열 [15, 25, 35]를 newArr에 할당함
 
--최종적으로 원본 배열과, 콜백 함수 실행 중의 currentValue, index 및 변환된 newArr이 출력됨
+- 최종적으로 원본 배열과, 콜백 함수 실행 중의 currentValue, index 및 변환된 newArr이 출력됨
 
 ```
 // 예제 4-3 콜백 함수 예시(2-1) - Array.prototype.map
@@ -79,5 +79,38 @@ var newArr = [10, 20, 30].map(function (currentValue, index) {
 30 2
 [ 15, 25, 35 ]
 ```
+
+#### Ex 4-4
+- Array.prototype.map이 콜백 함수를 호출할 때, 콜백 함수에 정의된 매개변수 이름(idx, currVal)과 관계없이 항상 정해진 순서(첫 번째 인자: 현재 요소 값, 두 번째 인자: 인덱스)로 값을 전달하는 방식을 설명함
+
+- 이 예제에서 map 메서드의 콜백 함수는 idx와 currVal이라는 두 개의 매개변수를 가짐
+
+- map 메서드의 규칙에 따라, idx 매개변수에는 배열의 현재 요소 값이 할당되고, currVal 매개변수에는 해당 요소의 인덱스가 할당됨
+
+- console.log(idx, currVal) 라인은 각 반복에서 idx(현재 값)와 currVal(인덱스)에 실제로 어떤 값이 전달되었는지 보여줌
+
+- 콜백 함수는 currVal + 5 (즉, 인덱스 + 5)를 반환하며, 이 반환된 값들이 모여 새로운 배열 newArr2를 형성함
+
+```
+// 예제 4-4 콜백 함수 예제 (2-2) - Array.prototype.map - 인자의 순서를 임의로 바꾸어 사용한 경우
+var newArr2 = [10, 20, 30].map(function (idx, currVal) {
+    console.log(idx, currVal);
+    return currVal + 5;
+  });
+  console.log(newArr2);
+```
+
+```
+// 실행 결과
+10 0
+20 1
+30 2
+[ 5, 6, 7 ]
+```
+
+
+
+
+
 
 
