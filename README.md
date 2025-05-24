@@ -53,4 +53,31 @@ var timer = setInterval(cbFunc, 300);
 4
 ```
 
+#### Ex 4-3
+
+- map 메서드는 배열 [10, 20, 30]의 각 요소에 대해 콜백 함수를 한 번씩 호출함
+
+-호출 시, 콜백 함수는 첫 번째 인자로 현재 처리 중인 요소(currentValue), 두 번째 인자로 해당 요소의 인덱스(index)를 전달받음
+
+-콜백 함수는 currentValue에 5를 더한 값을 반환하며, map 메서드는 이러한 반환 값들로 구성된 새로운 배열 [15, 25, 35]를 newArr에 할당함
+
+-최종적으로 원본 배열과, 콜백 함수 실행 중의 currentValue, index 및 변환된 newArr이 출력됨
+
+```
+// 예제 4-3 콜백 함수 예시(2-1) - Array.prototype.map
+var newArr = [10, 20, 30].map(function (currentValue, index) {
+    console.log(currentValue, index);
+    return currentValue + 5;
+  });
+  console.log(newArr);
+```
+
+```
+// 실행 결과
+10 0
+20 1
+30 2
+[ 15, 25, 35 ]
+```
+
 
