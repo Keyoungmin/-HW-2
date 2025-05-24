@@ -929,6 +929,31 @@ Ex 5-7 과 동일
 ```
 
 
+### Ex 5-10
+
+- 클로저를 사용하지 않았을 때 객체의 프로퍼티가 외부에서 쉽게 변경될 수 있는 상황을 보여줌
+- 정보 은닉의 필요성을 제시
+
+```
+// 예제 5-10 간단한 자동차 객체
+var car = {
+    fuel: Math.ceil(Math.random() * 10 + 10), // 연료 (L)
+    power: Math.ceil(Math.random() * 3 + 2),  // 연비 (km/L)
+    moved: 0,                                 // 총 이동거리
+    run: function () {
+        var km = Math.ceil(Math.random() * 6);
+        var wasteFuel = km / this.power;
+        if (this.fuel < wasteFuel) {
+            console.log('이동 불가');
+            return;
+        }
+        this.fuel -= wasteFuel;
+        this.moved += km;
+        console.log(km + 'km 이동 (총 ' + this.moved + 'km)');
+    }
+};
+```
+
 
 
 
