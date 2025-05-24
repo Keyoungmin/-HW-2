@@ -306,4 +306,44 @@ obj1
 obj2
 ```
 
+#### Ex 4-12
+- 비동기 작업을 순차적으로 처리하기 위해 콜백 함수를 반복적으로 중첩 사용하여 발생하는 "콜백 지옥"의 전형적인 예시를 보여줌
+  
+- setTimeout 함수가 연쇄적으로 호출되며, 각 콜백 함수는 커피 이름을 coffeeList 문자열에 누적하고 현재까지의 목록을 콘솔에 출력함
+
+- 첫 번째 setTimeout은 '에스프레소'를, 다음은 '아메리카노', 그 다음은 '카페라떼', 마지막으로 '카페모카'를 0.5초 간격으로 순차적으로 추가하고 출력함
+
+- 콜백 함수가 계속 중첩되면서 코드의 들여쓰기가 깊어지고, 이로 인해 코드의 흐름을 파악하기 어렵고 가독성이 저하되는 문제점을 나타냄
+
+
+```
+// 예제 4-12 콜백 지옥 예시(1-1)
+setTimeout(function (name) {
+    var coffeeList = name;
+    console.log(coffeeList);
+  
+    setTimeout(function (name) {
+      coffeeList += ', ' + name;
+      console.log(coffeeList);
+  
+      setTimeout(function (name) {
+        coffeeList += ', ' + name;
+        console.log(coffeeList);
+  
+        setTimeout(function (name) {
+          coffeeList += ', ' + name;
+          console.log(coffeeList);
+        }, 500, '카페라떼');
+      }, 500, '카페모카카');
+    }, 500, '아메리카노');
+  }, 500, '에스프레소');
+```
+
+```
+//실행 결과
+에스프레소
+에스프레소, 아메리카노
+에스프레소, 아메리카노, 카페라떼
+에스프레소, 아메리카노, 카페라떼, 카페모카
+```
 
