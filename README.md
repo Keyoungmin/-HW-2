@@ -657,3 +657,67 @@ console.log(outer2()); // 3
 3
 ```
 
+### Ex 5-4
+**(1) setInterval/setTimeout**
+
+- setInterval 또는 setTimeout에 전달된 콜백 함수가 클로저를 형성하는 사례를 보여줌
+
+- 비동기 작업에서 외부 함수의 변수를 참조하며 상태를 유지하는 클로저의 활용을 설명함
+
+
+```
+// (1) setInterval/setTimeout
+(function () {
+    var a = 0;
+    var intervalId = null;
+    var inner = function () {
+        if (++a >= 10) {
+            clearInterval(intervalId);
+        }
+        console.log(a);
+    };
+    intervalId = setInterval(inner, 1000);
+})();
+
+
+
+```
+
+```
+//실행 결과
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+```
+
+**(2) eventListener**
+
+- DOM 이벤트 리스너에 등록된 콜백 함수가 클로저를 형성하는 사례를 보여줌
+  
+- 이벤트 핸들러가 외부 함수의 변수를 참조하여 상태(클릭 횟수)를 유지하는 방법을 설명함
+  
+```
+// (2) eventListener
+(function () {
+    var count = 0;
+    var button = document.createElement('button');
+    button.innerText = 'click';
+
+    button.addEventListener('click', function () {
+        console.log(++count, 'times clicked');
+    });
+    document.body.appendChild(button);
+})();
+```
+
+```
+//실행 결과
+![image](https://github.com/user-attachments/assets/1b792c35-1e13-4d52-bc85-878b504a79e8)
+```
