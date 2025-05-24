@@ -451,3 +451,81 @@ new Promise(function (resolve) {
 ```
 
 
+#### Ex 4-15
+- 예제 4-14에서 Promise 체인을 구성할 때 반복적으로 사용된 로직을 addCoffee라는 고차 함수로 분리하여 코드를 더 간결하게 만드는 방법
+
+- addCoffee(name) 함수는 prevName을 인자로 받아 새로운 Promise를 반환하는 함수를 리턴함
+
+- 이 반환된 함수는 실행될 때, prevName에 현재 커피 name을 추가하여 coffeeList를 만들고, 0.5초 후 이 새 목록으로 resolve되는 Promise를 생성함
+
+- .then() 체인에서는 addCoffee('커피이름') 형태로 호출하여 각 단계를 실행하며, 이를 통해 코드의 중복을 줄이고 가독성을 향상시킴
+
+
+```
+// 예제 4-15 비동기 작업의 동기적 표현(2) - Promise(2)
+var addCoffee = function (name) {
+    return function (prevName) {
+      return new Promise(function (resolve) {
+        setTimeout(function () {
+          var newName = (prevName ? prevName + ', ' : '') + name;
+          console.log(newName);
+          resolve(newName);
+        }, 500);
+      });
+    };
+  };
+  
+  addCoffee('에스프레소')()
+    .then(addCoffee('아메리카노'))
+    .then(addCoffee('카페모카'))
+    .then(addCoffee('카페라떼'));
+```
+
+```
+//실행 결과
+에스프레소
+에스프레소, 아메리카노
+에스프레소, 아메리카노, 카페모카
+에스프레소, 아메리카노, 카페모카, 카페라떼
+```
+
+#### Ex 4-16
+- Generator를 사용하여 비동기적인 커피 추가 작업을 동기적인 코드처럼 보이도록 작성하는 방법
+
+- coffeeGenerator는 *가 붙은 제너레이터 함수로, yield 키워드를 사용하여 각 addCoffee 비동기 작업 지점에서 함수의 실행을 일시 중단함
+
+- addCoffee 함수는 0.5초의 setTimeout 비동기 작업이 완료된 후, 제너레이터의 coffeeMaker.next(value)를 호출하여 제너레이터 함수의 실행을 재개시키고 결과 값을 전달함
+
+- coffeeMaker = coffeeGenerator()로 제너레이터 객체를 생성하고, coffeeMaker.next()를 최초 호출하여 실행을 시작함
+
+- 이후 각 addCoffee의 콜백에서 coffeeMaker.next()가 호출됨에 따라, coffeeGenerator 내부의 코드가 yield 문을 기준으로 위에서 아래로 순차적으로 실행되는 것처럼 동작함
+
+
+```
+// 예제 4-16 비동기 작업의 동기적 표현(3) - Generator
+var addCoffee = function (prevName, name) {
+    setTimeout(function () {
+      coffeeMaker.next((prevName ? prevName + ', ' : '') + name);
+    }, 500);
+  };
+  var coffeeGenerator = function* () {
+    var espresso = yield addCoffee('', '에스프레소');
+    console.log(espresso);
+    var americano = yield addCoffee(espresso, '아메리카노');
+    console.log(americano);
+    var mocha = yield addCoffee(americano, '카페모카');
+    console.log(mocha);
+    var latte = yield addCoffee(mocha, '카페라떼');
+    console.log(latte);
+  };
+  var coffeeMaker = coffeeGenerator();
+  coffeeMaker.next();
+```
+
+```
+//실행 결과
+에스프레소
+에스프레소, 아메리카노
+에스프레소, 아메리카노, 카페모카
+에스프레소, 아메리카노, 카페모카, 카페라떼
+```
