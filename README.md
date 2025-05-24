@@ -150,12 +150,45 @@ document.body.querySelector('#a')
   });
 ```
 
-//코드 실행 결과
+- 코드 실행 결과
 ![image](https://github.com/user-attachments/assets/c22c94d1-316a-45d9-af40-f740325eafc7)
 
 
 
+#### Ex 4-7
 
+- 객체의 메서드도 콜백 함수로 전달될 수 있으며, 이 경우 함수 내부의 this는 함수가 어떻게 호출되느냐에 따라 결정됨을 설명함
+
+- obj.logValues(1, 2): logValues 함수를 obj의 메서드로서 호출했기 때문에, 함수 내의 this는 obj 객체를 참조함
+
+- [4, 5, 6].forEach(obj.logValues): obj.logValues 함수 자체를 forEach의 콜백으로 전달함. forEach는 이 콜백을 호출할 때 별도의 thisArg를 지정하지 않았으므로, logValues 함수 내의 this는 (비엄격 모드에서) 전역 객체 (Window)를 참조하게 됨 (엄격 모드에서는 undefined)
+
+```
+// 예제 4-7 메서드를 콜백 함수로 전달한 경우
+var obj = {
+    vals: [1, 2, 3],
+    logValues: function(v, i) {
+      console.log(this, v, i);
+    }
+  };
+  obj.logValues(1, 2);
+  [4, 5, 6].forEach(obj.logValues);d
+```
+
+```
+// 실행 결과
+{ vals: [ 1, 2, 3 ], logValues: [Function: logValues] } 1 2
+...
+}4 0
+
+<ref *1> Object [global] {
+...
+} 5 1
+
+<ref *1> Object [global] {
+...
+} 6 2
+```
 
 
 
