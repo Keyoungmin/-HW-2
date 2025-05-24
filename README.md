@@ -220,7 +220,31 @@ obj1
 ```
 
 
+#### Ex 4-9
 
+- 콜백 함수 내부에서 this를 사용하는 대신, 참조하고자 하는 객체의 이름을 직접 사용하여 해당 객체의 속성에 접근하는 방법을 보여줌
+
+- obj1.func 함수 내에서 this.name 대신 obj1.name과 같이 객체 변수 obj1을 직접 참조하여 name 속성을 사용함
+
+- 이 obj1.func 함수가 setTimeout의 콜백으로 실행될 때, obj1이라는 식별자를 통해 외부 스코프에 있는 obj1 객체에 직접 접근하여 그 name 속성인 'obj1'을 출력함
+
+- 이 방법은 this 바인딩의 복잡성을 피할 수 있지만, 코드가 특정 변수명에 강하게 결합되어 유연성이 저하될 수 있음
+
+```
+// 예제 4-9 콜백 함수 내부의 this를 사용하지 않은 경우
+var obj1 = {
+  name: 'obj1',
+  func: function () {
+    console.log(obj1.name); // this 대신 obj1을 직접 참조
+  }
+};
+setTimeout(obj1.func, 1000);
+```
+
+```
+//실행 결과
+obj1
+```
 
 
 
