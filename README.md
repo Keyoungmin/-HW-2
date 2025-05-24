@@ -1164,3 +1164,30 @@ Object.defineProperty(global, '_', {
 55
 ```
 
+### Ex 5-16
+
+- 짧은 시간 동안 반복적으로 발생하는 이벤트를 그룹화하여 마지막 또는 첫 번째 이벤트에 대해서만 콜백 함수를 실행하는 debounce 기능
+- setTimeout과 clearTimeout을 사용하여 함수 호출을 지연시키고, 지정된 시간 내에 다시 호출되면 이전 타이머를 취소하여 불필요한 실행을 방지
+
+```
+// 예제 5-16 부분 적용 함수 - 디바운스
+var debounce = function (eventName, func, wait) {
+    var timeoutId = null;
+    return function (event) {
+        var self = this;
+        console.log(eventName,'이벤트 발생');
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(func.bind(self, event), wait);
+    };
+};
+
+var moveHandler = function (e) {
+    console.log('move 이벤트 처리)');
+};
+var wheelHandler = function (e) {
+    console.log('wheel 이벤트 처리)');
+};
+document.body.addEventListener('mousemove', debounce('mousemove', moveHandler, 500));
+document.body.addEventListener('mousewheel', debounce('mousewheel', wheelHandler, 700));
+
+```
