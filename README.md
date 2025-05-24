@@ -721,3 +721,92 @@ console.log(outer2()); // 3
 //실행 결과
 ![image](https://github.com/user-attachments/assets/1b792c35-1e13-4d52-bc85-878b504a79e8)
 
+
+
+### Ex 5-5
+
+**(1) return에 의한 클로저의 메모리 해제**
+
+- `return`된 함수의 클로저의 메모리 관리 방법을 보여줌
+  
+- 외부 함수의 변수를 참조하는 내부 함수(클로저)가 반환된 후, 더 이상 해당 클로저가 필요 없을 때 참조를 명시적으로 해제(`null` 할당)하여 가비지 컬렉터가 메모리를 회수할 수 있도록 유도함
+  
+```
+// (1) return된 함수의 클로저의 메모리 해제
+var outer = function () {
+    var a = 1;
+    var inner = function () {
+      return ++a;
+    };
+    return inner;
+  };
+  
+  var outer2 = outer();
+  console.log(outer2()); // 2
+  console.log(outer2()); // 3
+  outer2 = null; // outer2 식별자의 inner 함수 참조를 끊음
+```
+
+```
+//실행 결과
+2
+3
+```
+
+**(2) setInterval에 의한 클로저의 메모리 해제**
+
+- setInterval의 콜백 함수로 클로저가 사용될 때, 특정 조건이 충족되면 clearInterval을 호출하여 인터벌을 중지함
+  
+- 더 나아가 콜백 함수 자체에 대한 참조도 null로 만들어, 클로저와 관련된 메모리가 해제될 수 있도록 함
+
+```
+// (2) setInterval에 의한 클로저의 메모리 해제
+(function () {
+    var a = 0;
+    var intervalId = null;
+    var inner = function () {
+      if (++a >= 10) {
+        clearInterval(intervalId);
+        inner = null; // inner 식별자의 함수 참조를 끊음
+      }
+      console.log(a);
+    };
+    intervalId = setInterval(inner, 1000);
+  })();
+```
+
+```
+//실행 결과
+1
+```
+**(3) eventListener에 의한 클로저의 메모리 해제**
+
+- DOM 요소의 이벤트 리스너로 클로저가 사용될 때, 특정 조건(예: 버튼 클릭 횟수)이 충족되면 removeEventListener를 사용하여 이벤트 리스너를 제거함
+  
+- 또한, 이벤트 핸들러 함수 자체의 참조도 null로 할당하여 클로저 관련 메모리가 해제되도록 함
+
+- 이벤트 리스너로 인한 메모리 누수를 방지하고, 더 이상 필요 없는 리소스의 참조를 정리하는 방법을 설명함
+
+
+```
+// (3) eventListener에 의한 클로저의 메모리 해제
+(function () {
+    var count = 0;
+    var button = document.createElement('button');
+    button.innerText = 'click';
+  
+    var clickHandler = function () {
+      console.log(++count, 'times clicked');
+      if (count >= 5) { // 5번 클릭되면
+        button.removeEventListener('click', clickHandler);
+        clickHandler = null; // clickHandler 식별자의 함수 참조를 끊음
+      }
+    };
+    button.addEventListener('click', clickHandler);
+    document.body.appendChild(button);
+  })();
+```
+
+
+//실행 결과
+![image](https://github.com/user-attachments/assets/32a44e8f-4d58-4c25-aa90-ec2f461ef9b7)
