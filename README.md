@@ -837,7 +837,7 @@ document.body.appendChild($ul);
 
 //실행 결과
 ![image](https://github.com/user-attachments/assets/5c2e83ab-5a4b-425c-9b39-76280e81282c)
-
+책의 설명에 따르면 어떤 버튼을 클릭해도 'peach'가 떠야 하지만, 이 코드는 정상 동작하여 각 과일 이름이 올바르게 alert됨
 
 ### Ex 5-7
 
@@ -866,5 +866,37 @@ document.body.appendChild($ul);
 
 //실행 결과
 ![image](https://github.com/user-attachments/assets/4be18f1e-c406-4dfa-94c0-401f03f41c4a)
+
+
+### Ex 5-8
+
+- Function.prototype.bind 메서드를 사용하여 콜백 함수에 인자를 전달하고 this 값을 바인딩하는 방법을 보여줌
+- 클로저 문제 해결 및 콜백 함수 컨텍스트 관리를 위한 bind의 활용법을 설명함
+
+```
+// 예제 5-8 콜백 함수와 클로저 (3)
+var fruits = ['apple', 'banana', 'peach'];
+var $ul = document.createElement('ul');
+
+var alertFruit = function (fruit) {
+    alert('your choice is ' + fruit);
+};
+fruits.forEach(function (fruit) {
+    var $li = document.createElement('li');
+    $li.innerText = fruit;
+    // this는 원래 $li지만, 첫번째 인자가 null이므로 그냥 전역객체를 바라보게 됨.
+    $li.addEventListener('click', alertFruit.bind(null, fruit));
+    $ul.appendChild($li);
+});
+document.body.appendChild($ul);
+```
+
+```
+//실행 결과
+5-7과 동일
+```
+
+
+
 
 
