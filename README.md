@@ -1195,13 +1195,13 @@ document.body.addEventListener('mousewheel', debounce('mousewheel', wheelHandler
 ### Ex 5-17
 
 - 커링(Currying)은 여러 개의 인자를 받는 함수를 하나의 인자만 받는 함수의 연속으로 바꾸는 기법임
-- 예제에서는 Math.max 함수에 curry5를 적용하고 첫 번째 인자로 10을 미리 넘겨 getMaxWith10 함수를 생성함
+- 예제에서는 Math.max 함수에 curry3를 적용하고 첫 번째 인자로 10을 미리 넘겨 getMaxWith10 함수를 생성함
 - getMaxWith10은 이후 하나의 인자만 더 받아서, 그 인자와 10중 더 큰 값을 반환하게 됨
 
 
 ```
 // 예제 5-17 커링 함수(1)
-var curry5 = function (func) {
+var curry3 = function (func) {
     return function (a) {
       return function (b) {
         return func(a, b);
@@ -1218,4 +1218,35 @@ var curry5 = function (func) {
 //실행 결과
 10
 25
+```
+
+
+### Ex 5-18
+
+- curry5 함수는 5개의 인자를 최종적으로 받을 함수 func를 인자로 받음
+- 각 단계의 함수는 하나의 인자만을 받고 다음 함수를 반환하며, 총 5개의 인자가 모두 전달되면 원래 함수 func를 모든 인자와 함께 호출하여 결과를 반환함
+- Math.max 함수에 이 커링 기법을 적용하여 getMax 함수를 생성하고, getMax(1)(2)(3)(4)(5)와 같이 연쇄적인 함수 호출을 통해 Math.max(1,2,3,4,5)를 실행한 결과를 얻음
+
+```
+// 예제 5-18 커링 함수(2)
+var curry5 = function (func) { 
+    return function (a) {
+      return function (b) {
+        return function (c) {
+          return function (d) {
+            return function (e) {
+              return func(a, b, c, d, e);
+            };
+          };
+        };
+      };
+    };
+  };
+  var getMax = curry5(Math.max);
+  console.log(getMax(1)(2)(3)(4)(5));
+```
+
+```
+//실행 결과
+5
 ```
