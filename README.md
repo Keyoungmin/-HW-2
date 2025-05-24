@@ -132,7 +132,7 @@ Array.prototype.map = function (callback, thisArg) {
 
 - setTimeout에 전달된 콜백 함수: 내부에서 this를 별도로 지정하지 않으므로, 콜백 함수 내의 this는 전역 객체(Window)를 참조함
 
-- 배열의 forEach 메서드에 전달된 콜백 함수: forEach 호출 시 this로 사용될 객체(thisArg)를 전달하지 않으면, 콜백 함수 내의 this는 (비엄격 모드에서) 전역 객체(Window)를 참조함
+- 배열의 forEach 메서드에 전달된 콜백 함수: forEach 호출 시 this로 사용될 객체를 전달하지 않으면, 콜백 함수 내의 this는 전역 객체(Window)를 참조함
 
 
 ```
@@ -246,5 +246,34 @@ setTimeout(obj1.func, 1000);
 obj1
 ```
 
+#### Ex 4-10
+- Ex 4-8을 다른 객체(obj2, obj3)의 컨텍스트에서 재활용하려 할 때의 동작을 보여줌
+
+- obj1.func를 obj2의 func 메서드로 할당하고 obj2.func()를 호출하여 콜백 함수을 callback2에 저장함
+
+- 또한, obj1.func를 obj3을 this로 하여 호출(obj1.func.call(obj3))하고 그 반환값(콜백 함수)을 callback3에 저장함
+
+```
+... (예제 4-8)
+
+  // 예제 4-10 func 함수 재활용
+  var obj2 = {
+    name: "obj2",
+    func: obj1.func
+  };
+  var callback2 = obj2.func();
+  setTimeout(callback2, 1500);
+  
+  var obj3 = { name: "obj3" };
+  var callback3 = obj1.func.call(obj3);
+  setTimeout(callback3, 2000);
+```
+
+```
+//실행 결과
+obj1
+obj2
+obj3
+```
 
 
